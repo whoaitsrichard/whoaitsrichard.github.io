@@ -2,13 +2,107 @@
 <html lang="en">
 <head>
   <meta name="google-site-verification" content="ChRuE9kxN8h-jFqqFJUeUyNxoCxO5IHx7iS9yaXGdZ4" />
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  
+  <!-- Preload critical assets -->
+  <link rel="preload" as="image" href="assets/img/profile-img.jpg">
+  <link rel="preload" as="image" href="assets/img/square-profile.jpg">
+  
+  <style>
+    /* Initial page load - hide everything smoothly */
+    body {
+      opacity: 0;
+      transition: opacity 0.4s ease-in-out;
+    }
+    
+    body.loaded {
+      opacity: 1;
+    }
+    
+    /* Sidebar placeholder to prevent layout shift */
+    #sidebar-div {
+      min-width: 300px;
+      min-height: 100vh;
+    }
+    
+    /* Staggered fade-in for main content sections */
+    #main section {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    
+    body.loaded #main section {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    body.loaded #main section:nth-child(1) { transition-delay: 0.1s; }
+    body.loaded #main section:nth-child(2) { transition-delay: 0.2s; }
+    body.loaded #main section:nth-child(3) { transition-delay: 0.3s; }
+    
+    /* Profile image smooth load */
+    .img-fluid {
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+    
+    .img-fluid.loaded {
+      opacity: 1;
+    }
+    
+    /* Header sidebar smooth appearance */
+    #header {
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    
+    body.loaded #header {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  </style>
+  
   <script>
-    fetch('sidebar.html')
-    .then(response => response.text())
-    .then(data => document.getElementById('sidebar-div').innerHTML = data);
-    fetch('header.html')
-    .then(response => response.text())
-    .then(data => document.getElementById('header-div').innerHTML = data);
+    // Load sidebar and header, then reveal page
+    document.addEventListener('DOMContentLoaded', function() {
+      const sidebarPromise = fetch('sidebar.html')
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('sidebar-div').innerHTML = data;
+        });
+      
+      const headerPromise = fetch('header.html')
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('header-div').innerHTML = data;
+        });
+      
+      // Wait for both to load, then reveal page
+      Promise.all([sidebarPromise, headerPromise]).then(() => {
+        // Small delay to ensure styles are applied
+        requestAnimationFrame(() => {
+          document.body.classList.add('loaded');
+        });
+      });
+      
+      // Handle profile image smooth loading
+      const profileImg = document.querySelector('.col-lg-4 .img-fluid');
+      if (profileImg) {
+        if (profileImg.complete) {
+          profileImg.classList.add('loaded');
+        } else {
+          profileImg.addEventListener('load', () => profileImg.classList.add('loaded'));
+        }
+      }
+    });
+    
+    // Fallback - show page after 1.5s even if something fails
+    setTimeout(() => {
+      document.body.classList.add('loaded');
+    }, 1500);
   </script>
 </head>
 <body>

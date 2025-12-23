@@ -5,13 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Example</title>
     <link rel="stylesheet" href="styles.css">
+    
+    <!-- Smooth page loading styles -->
+    <style>
+        body { opacity: 0; transition: opacity 0.4s ease-in-out; }
+        body.loaded { opacity: 1; }
+        #sidebar-div { min-width: 300px; }
+        #main section, #main .container { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+        body.loaded #main section, body.loaded #main .container { opacity: 1; transform: translateY(0); }
+        body.loaded #main > *:nth-child(1) { transition-delay: 0.1s; }
+        body.loaded #main > *:nth-child(2) { transition-delay: 0.2s; }
+        #header { opacity: 0; transform: translateX(-20px); transition: opacity 0.4s ease, transform 0.4s ease; }
+        body.loaded #header { opacity: 1; transform: translateX(0); }
+    </style>
+    
+    <!-- Preload first image -->
+    <link rel="preload" as="image" href="photos/moving/moving-1.jpg">
+    
     <script>
-      fetch('sidebar.html')
-      .then(response => response.text())
-      .then(data => document.getElementById('sidebar-div').innerHTML = data);
-      fetch('header.html')
-      .then(response => response.text())
-      .then(data => document.getElementById('header-div').innerHTML = data);
+        document.addEventListener('DOMContentLoaded', function() {
+            Promise.all([
+                fetch('sidebar.html').then(r => r.text()).then(data => document.getElementById('sidebar-div').innerHTML = data),
+                fetch('header.html').then(r => r.text()).then(data => document.getElementById('header-div').innerHTML = data)
+            ]).then(() => requestAnimationFrame(() => document.body.classList.add('loaded')));
+        });
+        setTimeout(() => document.body.classList.add('loaded'), 1500);
     </script>
     <style>
       * {
