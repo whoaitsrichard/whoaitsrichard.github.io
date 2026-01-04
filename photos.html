@@ -3,6 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Photos</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/venobox/venobox.css" rel="stylesheet">
+  <link href="assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
   
   <!-- Smooth page loading styles -->
   <style>
@@ -19,10 +29,12 @@
   
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      Promise.all([
-        fetch('sidebar.html').then(r => r.text()).then(data => document.getElementById('sidebar-div').innerHTML = data),
-        fetch('header.html').then(r => r.text()).then(data => document.getElementById('header-div').innerHTML = data)
-      ]).then(() => requestAnimationFrame(() => document.body.classList.add('loaded')));
+      fetch('sidebar.html')
+        .then(r => r.text())
+        .then(data => {
+          document.getElementById('sidebar-div').innerHTML = data;
+        })
+        .then(() => requestAnimationFrame(() => document.body.classList.add('loaded')));
     });
     setTimeout(() => document.body.classList.add('loaded'), 1500);
   </script>
@@ -154,69 +166,66 @@
       });
     });
   </script>
-</head>
 
-
-<style>
-.masonry { /* Masonry container */
-    -webkit-column-count: 3;
-  -moz-column-count:3;
+  <style>
+.masonry {
+  -webkit-column-count: 3;
+  -moz-column-count: 3;
   column-count: 3;
   -webkit-column-gap: 0.3em;
   -moz-column-gap: 0.3em;
   column-gap: 0.3em;
-   margin: 0.3em;
-    padding: 0;
-    -moz-column-gap: 0.3em;
-    -webkit-column-gap: 0.3em;
-    column-gap: 0.3em;
-    font-size: .85em;
+  margin: 0.3em;
+  padding: 0;
+  font-size: .85em;
 }
+
 .item {
-    display: inline-block;
-    background: #fff;
-    padding: 0.3em;
-    margin: 0 0 0.3em;
-    width: 100%;
-
-    
-}
-.item img{max-width:100%;}
-
-@media only screen and (max-width: 320px) {
-    .masonry {
-        -moz-column-count: 1;
-        -webkit-column-count: 1;
-        column-count: 1;
-    }
+  display: inline-block;
+  background: #fff;
+  padding: 0.3em;
+  margin: 0 0 0.3em;
+  width: 100%;
+  break-inside: avoid;
+  -webkit-column-break-inside: avoid;
+  page-break-inside: avoid;
 }
 
-@media only screen and (min-width: 321px) and (max-width: 768px){
-    .masonry {
-        -moz-column-count: 2;
-        -webkit-column-count: 2;
-        column-count: 2;
-    }
-}
-@media only screen and (min-width: 769px) and (max-width: 1200px){
-    .masonry {
-        -moz-column-count: 3;
-        -webkit-column-count: 3;
-        column-count: 3;
-    }
-}
-@media only screen and (min-width: 1201px) {
-    .masonry {
-        -moz-column-count: 3;
-        -webkit-column-count: 3;
-        column-count: 3;
-    }
+.item img {
+  max-width: 100%;
+  width: 100% !important;
+  height: auto !important;
+  display: block;
 }
 
-</style>
+@media (max-width: 575.98px) {
+  .masonry {
+    -moz-column-count: 1;
+    -webkit-column-count: 1;
+    column-count: 1;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 991.98px) {
+  .masonry {
+    -moz-column-count: 2;
+    -webkit-column-count: 2;
+    column-count: 2;
+  }
+}
+
+@media (min-width: 992px) {
+  .masonry {
+    -moz-column-count: 3;
+    -webkit-column-count: 3;
+    column-count: 3;
+  }
+}
+
+  </style>
+</head>
 
 <body>
-
   <div id="sidebar-div"></div>
 
   <main id="main">
@@ -226,10 +235,10 @@
       <div class="container">
 
         <div class="d-flex justify-content-between align-items-center">
-          <h2>Portfolio</h2>
+          <h2>Photos</h2>
           <ol>
             <li><a href="index.html">Home</a></li>
-            <li>Portfolio</li>
+            <li>Photos</li>
           </ol>
         </div>
 
@@ -237,11 +246,6 @@
     </section><!-- End Breadcrumbs -->
 
 
-
-
-
-
-<body>
 
 <div class="masonry">
 
@@ -390,16 +394,6 @@
 
 
 
-
-
-
-
-<br>
-
-
-</div>
-
-</div>
     <!-- End Portfolio Details Section -->
   </main><!-- End #main -->
 
