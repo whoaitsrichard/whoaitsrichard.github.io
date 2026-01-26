@@ -33,6 +33,11 @@
         .then(r => r.text())
         .then(data => {
           document.getElementById('sidebar-div').innerHTML = data;
+          // Handle sidebar image loading
+          document.querySelectorAll('#sidebar-div .img-fluid').forEach(img => {
+            if (img.complete) img.classList.add('loaded');
+            else img.addEventListener('load', () => img.classList.add('loaded'));
+          });
         })
         .then(() => requestAnimationFrame(() => document.body.classList.add('loaded')));
     });
@@ -237,7 +242,7 @@
         <div class="d-flex justify-content-between align-items-center">
           <h2>Photos</h2>
           <ol>
-            <li><a href="index.html">Home</a></li>
+            <li><a href="./">Home</a></li>
             <li>Photos</li>
           </ol>
         </div>

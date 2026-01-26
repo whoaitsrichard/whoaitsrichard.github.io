@@ -3,6 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/venobox/venobox.css" rel="stylesheet">
+  <link href="assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
   
   <!-- Smooth page loading styles -->
   <style>
@@ -21,10 +31,16 @@
   
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      Promise.all([
-        fetch('sidebar.html').then(r => r.text()).then(data => document.getElementById('sidebar-div').innerHTML = data),
-        fetch('header.html').then(r => r.text()).then(data => document.getElementById('header-div').innerHTML = data)
-      ]).then(() => requestAnimationFrame(() => document.body.classList.add('loaded')));
+      fetch('sidebar.html')
+        .then(r => r.text())
+        .then(data => {
+          document.getElementById('sidebar-div').innerHTML = data;
+          document.querySelectorAll('#sidebar-div .img-fluid').forEach(img => {
+            if (img.complete) img.classList.add('loaded');
+            else img.addEventListener('load', () => img.classList.add('loaded'));
+          });
+        })
+        .then(() => requestAnimationFrame(() => document.body.classList.add('loaded')));
       
       // Handle profile images
       document.querySelectorAll('.img-fluid').forEach(img => {
@@ -35,8 +51,6 @@
     setTimeout(() => document.body.classList.add('loaded'), 1500);
   </script>
 </head>
-<div id="header-div"></div>
-
 <body>
   <div id="sidebar-div"></div>
   <main id="main">
@@ -46,7 +60,7 @@
         <div class="d-flex justify-content-between align-items-center">
           <h2></h2>
           <ol>
-            <li><a href="index.html">Home</a></li>
+            <li><a href="./">Home</a></li>
           </ol>
         </div>
       </div>
